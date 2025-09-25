@@ -1,34 +1,40 @@
 
 const fs = require('node:fs');
 
-let folderPath= "C:/Users/willg/Downloads/Standard Notes Export - Wed Sep 24 2025 16_26_50 GMT-0500"
+//has to be forward slash 
+let folderPath= "C:/Users/willg/Downloads/export"
 let bundle = fs.readdirSync(folderPath,'utf8',withFileTypes=true)
 
 
 // use when demoing with indiv notes 
-        //let indivFilePath = "C:/Users/willg/Downloads/Standard Notes Export - Wed Sep 24 2025 16_26_50 GMT-0500/2024-12-11 at 12_31 PM Justin CAR Meeting.md"
-        //let indivNote = fs.readFileSync(indivFilePath, 'utf8');
+        // let indivFilePath = "C:/Users/willg/Downloads/"
+        // let indivNote = fs.readFileSync(indivFilePath, 'utf8');
+ 
+function cleanNote(note){    
+    let cleanedNote = note
+    let results = cleanedNote.match(/!\[image.png\]\(.*\)/g)
 
-function cleanNote(note){
-    let start = note.indexOf("![image.png]")
-    let end = note.lastIndexOf(")");
-    let img= note.slice(start,end+1)
-    return note.replace(img,"")
-}
+    if (cleanedNote.indexOf("![image.png]") != -1){
+    results.forEach((result) => {
+        cleanedNote = cleanedNote.replace(result, "")
+    })
+        }
 
-//console.log(cleanNote(indivNote));
+        return cleanedNote
+    }
 
-let notes = ""
+//below starts the bundling process
+    let notes = ""
 
-bundle.forEach((file) => {
-let path = folderPath + "/" + file
-let fileContent = fs.readFileSync(path, 'utf8');
+    bundle.forEach((file) => {
+    let path = folderPath + "/" + file
+    let fileContent = fs.readFileSync(path, 'utf8');
 
-fileContent = cleanNote(fileContent)
+    fileContent = cleanNote(fileContent)
 
-notes += fileContent
-})
+    notes += fileContent
+    })
 
-let title = "lrtp2NotesRevised.txt"
+    let title = "AI Notebook 09 25 25.txt"
 
-fs.writeFileSync("C:/Users/willg/Downloads/"+title, notes, 'utf8');
+    fs.writeFileSync("C:/Users/willg/Downloads/"+title, notes, 'utf8');
