@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 
 //has to be forward slash 
-let folderPath= "C:/Users/willg/Downloads/Xcel Portfolio Raw 10 23 25" // enter folder where docs are here
+let folderPath= "C:/Users/willg/Downloads/Portfolio Raw 10 23 25" // enter folder where docs are here
 
 let bundle = fs.readdirSync(folderPath,'utf8',withFileTypes=true) //returns the list of file names 
 
